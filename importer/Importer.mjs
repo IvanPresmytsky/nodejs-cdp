@@ -1,20 +1,24 @@
+import fs from 'fs';
+
 export default class Importer {
   constructor(emitter) {
-    console.log('Importer');
     this.emitter = emitter;
     this.data = [];
   }
 
   listenWatcher() {
-    this.emitter.on('dirwatcher:changed', (path) => {
+    this.emitter.on('dirwatcher:changed', (dir) => {
       console.log('handle changing!');
-      console.log('path: ', path);
-      this.data.push(path);
+      dir.forEach(file => {
+        const content = fs.readFileSync(file); 
+        this.data.push({ [file]: content });
+      });
     });
   }
 
-  importSync() {
+  importSync(file) {
     console.log('importing');
     console.log(this.data);
+    return this.data.find(item => item[file]);
   }
 };

@@ -3,12 +3,15 @@ import Importer from './importer/Importer.mjs';
 import EventEmitter from 'events';
 
 const dirwatcher = new DirWatcher();
-const x = dirwatcher.watch('./data', 500);
+const x = dirwatcher.watch('./data', 2000);
 
 const importer = new Importer(x);
 importer.listenWatcher();
 
 setTimeout(() => {
-  importer.importSync();
-}, 5000);
+  const importedFile = importer.importSync('./data/file.js');
+  console.log('importedFile: ', importedFile);
+  dirwatcher.stopWatching();
+}, 20000);
+
 
