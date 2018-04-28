@@ -1,38 +1,48 @@
 import fs from 'fs';
+import path from 'path';
 import EventEmitter from 'events';
 
 export default class DirWatcher {
   constructor() {
-    console.log('DirWatcher');
     this.cashedData = [];
     this.changedData = [];
     this.timer;
   }
 
-  watch(path, interval) {
-    console.log(`start watching "${path}"`);
+  customWatcher(customWatcher, dirPath) {
+    const dir = fs.readdirSync(dirPath).map(file => path.resolve(dirPath, file));
+
+    if (!this.cashedData.length) {
+      this.cashedData = dir;
+      this.changedData = dir;
+    } else {
+      this.changedData = dir.filter(file => {
+        return file !== this.cashedData.find(item => item === file);
+      });
+      this.cashedData = dir;
+      console.log('changedData: ', this.changedData);
+    }
+
+    if (this.changedData.length) {
+      customWatcher.emit('dirwatcher:changed', this.changedData);
+    }
+  }
+
+  watch(dirPath, delay) {
+    console.log(`start watching "${dirPath}"${delay && ` with delay: ${delay}`}`);
     const customWatcher = new EventEmitter();
-    this.timer = setInterval(() => {
-      try {
-        const dir = fs.readdirSync(path).map(file => `${path}/${file}`);
-        console.log('dir: ', dir);
-        if (!this.cashedData.length) {
-          this.cashedData = dir;
-          this.changedData = dir;
-        } else {
-          this.changedData = dir.filter(file => {
-            return file !== this.cashedData.find(item => item === file);
-          });
-          this.cashedData = dir;
+
+    setTimeout(() => {
+      console.log(`start watching "${dirPath}"`);
+      this.timer = setInterval(() => {
+        try {
+          this.customWatcher(customWatcher, dirPath);
+        } catch (error) {
+          console.log('ERROR: ', error);
         }
-        console.log('changedData: ', this.changedData);
-        if (this.changedData.length) {
-          customWatcher.emit('dirwatcher:changed', this.changedData);  
-        }
-      } catch (error) {
-        console.log('ERROR: ', error);
-      }
-    }, interval);
+      }, 200);  
+    }, delay);
+
     return customWatcher;
   }
 
