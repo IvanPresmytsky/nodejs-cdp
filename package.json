@@ -1,0 +1,23 @@
+{
+  "name": "cdp_node_app",
+  "version": "1.0.0",
+  "description": "homework app for node cdp",
+  "main": "app.js",
+  "scripts": {
+    "start": "node -r esm ./app.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:IvanPresmytsky/nodejs-cdp.git"
+  },
+  "author": "Ivan Prasmytski",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.17.3"
+  },
+  "dependencies": {
+    "csvtojson": "^1.1.9",
+    "esm": "^3.0.27"
+  }
+}
