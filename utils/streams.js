@@ -1,5 +1,4 @@
-const program = require('commander');
-const commander = require('./customCommander');
+const Commander = require('./commander');
 
 const colors = require('colors');
 const actionNames = {
@@ -46,21 +45,8 @@ function make_red(txt) {
   return colors.red(txt);
 }
 
-function action(action) {
-  console.log(commander.parse(process.argv));
-  const validAction = actions.find((item) => item === action);
-  const processArgs = process.argv.slice(2);
-
-  if(!validAction) {
-    program.outputHelp(make_red);
-  }
- 
-  const actionArgument = processArgs.find((item) => item === actionsArgs[0] || item === actionsArgs[1])
-    ? processArgs[3]
-    : null;
-
-  if (actionArgument) {
-    switch (validAction) {
+function action(action, actionArgument) {
+    switch (action) {
       case actionNames.REVERSE:
         reverse(actionArgument)
         break;
@@ -79,27 +65,14 @@ function action(action) {
       default:
         break;
     }
-  }
-  console.log('processArgs', processArgs);
-  console.log('actionArgument', actionArgument);
-  console.log('validAction', validAction);
 }
 
-function file(file) {
-
-}
-
-program
-  .version('0.1.0', '-v, --version')
-  .option('-a, --action <action>', 'call action code', action)
-  .option('-f, --file <file>', 'add argument to action', file);
-
-program.on('--help', function(){
-  console.log('Examples: ');
+const commander = new Commander({
+  args: ['--file', '-f'],
+  actions,
+  command: action,
+  name: '--action',
+  shortcut: '-a',
 });
 
-if (!process.argv.slice(2).length) {
-  program.outputHelp(make_red);
-}
-
-program.parse(process.argv);
+commander.parse(process.argv);

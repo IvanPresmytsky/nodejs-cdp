@@ -17,8 +17,8 @@
     "nodemon": "^1.17.3"
   },
   "dependencies": {
+    "array-flatten": "^2.1.1",
     "colors": "^1.2.5",
-    "commander": "^2.15.1",
     "esm": "^3.0.27"
   }
 }
