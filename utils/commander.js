@@ -9,7 +9,7 @@ class Commander extends EventEmmiter {
     this.command = props.command;
     this.name = props.name;
     this.shortcut = props.shortcut;
-    this._args = props.args || [];
+    this.argsFlags = props.argsFlags || [];
   }
  
   normalizeArgs(args) {
@@ -26,6 +26,14 @@ class Commander extends EventEmmiter {
     return flatten(normalized);
   }
 
+  hasHelpArg(args) {
+    const helpName = '--help';
+    const helpShortcut = '-h';
+    const firstArg = args[0];
+
+    return firstArg === helpName || firstArg === helpShortcut;
+  }
+
   getArg(args, name, shortcut) {
     const firstArg = args.length && args[0];
     
@@ -35,8 +43,27 @@ class Commander extends EventEmmiter {
     return null;
   }
 
-  showHelp(isAlert) {
-    const text = 'HELP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!';
+  getActionsArg(args, action, argsFlags) {
+    const actionsArgFlagIndex = args.indexOf(action) + 1;
+    const { name, shortcut } = argsFlags;
+
+    return this.getArg(args.slice(actionsArgFlagIndex), name, shortcut);
+  }
+
+  showHelp(isAlert, alertMessage = '') {
+    const actionText = `Use ${this.name} or ${this.shortcut} with following args:`;
+    const actionsArgsText = this.actions.join(', ');
+    const argsForActionText = `To pass argumets to action use ${this.argsFlags[0].name} or ${this.argsFlags[0].shortcut}`;
+    const nextLine = '\n';
+
+    const text = [
+      alertMessage,
+      actionText,
+      actionsArgsText,
+      argsForActionText,
+      nextLine
+    ].join(nextLine);
+
     const message = isAlert
       ? this.make_red(text)
       : text;
@@ -52,6 +79,13 @@ class Commander extends EventEmmiter {
     const normalized = this.normalizeArgs(argv);
 
     if (!normalized) {
+      this.showHelp(true, 'No arguments were passed!');
+      return;
+    }
+
+    const isHelp = this.hasHelpArg(normalized);
+
+    if (isHelp) {
       this.showHelp();
       return;
     }
@@ -60,14 +94,14 @@ class Commander extends EventEmmiter {
     const validAction = action && this.actions.find((item) => item === action);
 
     if (!validAction) {
-      this.showHelp();
+      this.showHelp(true, 'Incorrect action was passed!');
       return;
     }
 
-    const actionArg = this.getArg(normalized.slice(normalized.indexOf(validAction) + 1), this._args[0], this._args[1]);
+    const actionArg = this.getActionsArg(normalized, validAction, this.argsFlags[0]);
 
     if (!actionArg) {
-      this.showHelp(true);
+      this.showHelp(true, 'Incorrect flag for actions argument was used!');
     }
 
     this.command(action, actionArg);

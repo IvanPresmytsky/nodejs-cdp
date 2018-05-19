@@ -68,8 +68,13 @@ function action(action, actionArgument) {
 }
 
 const commander = new Commander({
-  args: ['--file', '-f'],
   actions,
+  argsFlags: [
+    {
+      name: '--file',
+      shortcut: '-f',
+    },
+  ],
   command: action,
   name: '--action',
   shortcut: '-a',
