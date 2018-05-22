@@ -8,21 +8,10 @@ const actionNames = {
   CONVERT_FROM_FILE: 'convertFromFile',
   CONVERT_TO_FILE: 'convertToFile'
 }
-const actions = [
-  actionNames.REVERSE,
-  actionNames.TRANSFORM,
-  actionNames.OUTPUT_FILE,
-  actionNames.CONVERT_FROM_FILE,
-  actionNames.CONVERT_TO_FILE
-];
 
-const actionsArgs = [
-  '-f',
-  '--file',
-];
-
-function reverse(str) {
-  console.log('reversing... ' + str);
+function reverse() {
+  console.log('Reversing...');
+  process.stdin.pipe(process.stdout);
 }
 
 function transform(str) {
@@ -48,27 +37,30 @@ function make_red(txt) {
 function action(action, actionArgument) {
     switch (action) {
       case actionNames.REVERSE:
-        reverse(actionArgument)
+        reverse();
         break;
       case actionNames.TRANSFORM:
-        transform(actionArgument)
+        transform();
         break;
       case actionNames.OUTPUT_FILE:
-        outputFile(actionArgument)
+        actionArgument && outputFile(actionArgument);
         break;
       case actionNames.CONVERT_FROM_FILE:
-        convertFromFile(actionArgument)
+        actionArgument && convertFromFile(actionArgument);
         break;
       case actionNames.CONVERT_TO_FILE:
-        convertToFile(actionArgument)
+        actionArgument && convertToFile(actionArgument);
         break;
       default:
         break;
     }
 }
 
+const actions = Object.keys(actionNames).map((item, i) => actionNames[item]);
+
 const commander = new Commander({
   actions,
+  actionsWithoutArgs: [actionNames.REVERSE, actionNames.TRANSFORM],
   argsFlags: [
     {
       name: '--file',

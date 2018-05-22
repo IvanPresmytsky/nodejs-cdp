@@ -6,6 +6,7 @@ class Commander extends EventEmmiter {
   constructor(props) {
     super(props);
     this.actions = props.actions  || [];
+    this.actionsWithoutArgs =  props.actionsWithoutArgs || [];
     this.command = props.command;
     this.name = props.name;
     this.shortcut = props.shortcut;
@@ -97,14 +98,19 @@ class Commander extends EventEmmiter {
       this.showHelp(true, 'Incorrect action was passed!');
       return;
     }
-
-    const actionArg = this.getActionsArg(normalized, validAction, this.argsFlags[0]);
-
-    if (!actionArg) {
-      this.showHelp(true, 'Incorrect flag for actions argument was used!');
+    const isArgNeeded = this.actionsWithoutArgs.indexOf(validAction) === -1;
+    if (isArgNeeded) {
+      const actionArg = this.getActionsArg(normalized, validAction, this.argsFlags[0]);
+  
+      if (!actionArg) {
+        this.showHelp(true, 'Incorrect flag for actions argument was used!');
+        return
+      }
+      this.command(action, actionArg);
+    } else {
+      this.command(action);
     }
 
-    this.command(action, actionArg);
   }
 }
 
