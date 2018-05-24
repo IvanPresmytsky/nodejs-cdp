@@ -98,7 +98,9 @@ class Commander extends EventEmmiter {
       this.showHelp(true, 'Incorrect action was passed!');
       return;
     }
+
     const isArgNeeded = this.actionsWithoutArgs.indexOf(validAction) === -1;
+
     if (isArgNeeded) {
       const actionArg = this.getActionsArg(normalized, validAction, this.argsFlags[0]);
   

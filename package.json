@@ -19,6 +19,6 @@
   "dependencies": {
     "array-flatten": "^2.1.1",
     "colors": "^1.2.5",
-    "esm": "^3.0.27"
+    "through2": "^2.0.3"
   }
 }
