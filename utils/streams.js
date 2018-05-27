@@ -1,14 +1,44 @@
 const Commander = require('./commander');
 const colors = require('colors');
 
-const actionNames = {
-  REVERSE: 'reverse',
-  TRANSFORM: 'transform',
-  OUTPUT_FILE: 'outputFile',
-  CONVERT_FROM_FILE: 'convertFromFile',
-  CONVERT_TO_FILE: 'convertToFile',
-  BUNDLE_CSS: 'bundleCss'
-}
+const {
+  actionNames,
+  flagNames,
+  shortcutsNames
+} = require('../constants');
+
+const actions = {
+  reverse: {
+    name: actionNames.REVERSE,
+    flag: null,
+    shortcut: null,
+  },
+  transform: {
+    name: actionNames.TRANSFORM,
+    flag: null,
+    shortcut: null,
+  },
+  outputFile: {
+    name: actionNames.OUTPUT_FILE,
+    flag: flagNames.FILE,
+    shortcut: shortcutsNames.F,
+  },
+  convertFromFile: {
+    name: actionNames.CONVERT_FROM_FILE,
+    flag: flagNames.FILE,
+    shortcut: shortcutsNames.F,
+  },
+  convertToFile: {
+    name: actionNames.CONVERT_TO_FILE,
+    flag: flagNames.FILE,
+    shortcut: shortcutsNames.F,
+  },
+  bundleCss: {
+    name: actionNames.BUNDLE_CSS,
+    flag: flagNames.PATH,
+    shortcut: shortcutsNames.P,
+  }
+};
 
 const {
   convertFromFile,
@@ -44,20 +74,11 @@ function action(action, actionArgument) {
   }
 }
 
-const actions = Object.keys(actionNames).map((item, i) => actionNames[item]);
-
 const commander = new Commander({
   actions,
-  actionsWithoutArgs: [actionNames.REVERSE, actionNames.TRANSFORM],
-  argsFlags: [
-    {
-      name: '--file',
-      shortcut: '-f',
-    },
-  ],
   command: action,
-  name: '--action',
-  shortcut: '-a',
+  name: flagNames.ACTION,
+  shortcut: shortcutsNames.A,
 });
 
 commander.parse(process.argv);

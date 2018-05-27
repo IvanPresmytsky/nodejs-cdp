@@ -1,16 +1,15 @@
 const colors = require('colors');
 const EventEmmiter = require('events').EventEmitter;
 const flatten = require('array-flatten');
+const { flagNames, shortcutsNames } = require('../constants');
 
 class Commander extends EventEmmiter {
   constructor(props) {
     super(props);
-    this.actions = props.actions  || [];
-    this.actionsWithoutArgs =  props.actionsWithoutArgs || [];
+    this.actions = props.actions  || {};
     this.command = props.command;
     this.name = props.name;
     this.shortcut = props.shortcut;
-    this.argsFlags = props.argsFlags || [];
   }
  
   normalizeArgs(args) {
@@ -27,41 +26,46 @@ class Commander extends EventEmmiter {
     return flatten(normalized);
   }
 
-  hasHelpArg(args) {
-    const helpName = '--help';
-    const helpShortcut = '-h';
-    const firstArg = args[0];
-
-    return firstArg === helpName || firstArg === helpShortcut;
+  hasArg(args, flag, shortcut) {
+    const firstArg = args.length && args[0];
+    return firstArg === flag || firstArg === shortcut;
   }
 
-  getArg(args, name, shortcut) {
+  getArg(args, flag, shortcut) {
     const firstArg = args.length && args[0];
     
     if (!firstArg) return null;
-    if ((firstArg === shortcut || firstArg === name) && args[1]) return args[1]
+    if ((firstArg === shortcut || firstArg === flag) && args[1]) return args[1]
 
     return null;
   }
 
-  getActionsArg(args, action, argsFlags) {
+  getActionsArg(args, action, flag, shortcut) {
     const actionsArgFlagIndex = args.indexOf(action) + 1;
-    const { name, shortcut } = argsFlags;
+    return this.getArg(args.slice(actionsArgFlagIndex), flag, shortcut);
+  }
 
-    return this.getArg(args.slice(actionsArgFlagIndex), name, shortcut);
+  generateHelpMessageForFlagArgs(actions) {
+    return Object.keys(actions)
+      .map(item => {
+        const action = actions[item];
+        if (!(action.flag && action.shortcut && action.name)) return null;
+        return `To pass argumets to action ${action.name} use ${action.flag} or ${action.shortcut}`;
+      })
+      .filter(item => item);
   }
 
   showHelp(isAlert, alertMessage = '') {
     const actionText = `Use ${this.name} or ${this.shortcut} with following args:`;
-    const actionsArgsText = this.actions.join(', ');
-    const argsForActionText = `To pass argumets to action use ${this.argsFlags[0].name} or ${this.argsFlags[0].shortcut}`;
+    const actionsArgsText = Object.keys(this.actions).join(', ');
+    const argsForActionMessages = this.generateHelpMessageForFlagArgs(this.actions);
     const nextLine = '\n';
 
     const text = [
       alertMessage,
       actionText,
       actionsArgsText,
-      argsForActionText,
+      ...argsForActionMessages,
       nextLine
     ].join(nextLine);
 
@@ -84,25 +88,32 @@ class Commander extends EventEmmiter {
       return;
     }
 
-    const isHelp = this.hasHelpArg(normalized);
+    const isHelp = this.hasArg(normalized, flagNames.HELP, shortcutsNames.H);
+    const isAction = this.hasArg(normalized, flagNames.ACTION, shortcutsNames.A);
 
     if (isHelp) {
       this.showHelp();
       return;
     }
 
-    const action = this.getArg(normalized, this.name, this.shortcut);
-    const validAction = action && this.actions.find((item) => item === action);
+    if (!isAction) {
+      this.showHelp(true, '"--action", "-a", "--help", "-h" should be passed as first argument!');
+      return;
+    }
 
-    if (!validAction) {
+    const action = this.getArg(normalized, this.name, this.shortcut);
+    const validAction = action && this.actions[action];
+    const validActionName = validAction && validAction.name;
+
+    if (!validActionName) {
       this.showHelp(true, 'Incorrect action was passed!');
       return;
     }
 
-    const isArgNeeded = this.actionsWithoutArgs.indexOf(validAction) === -1;
+    const isArgNeeded = validAction.flag || validAction.shortcut;
 
     if (isArgNeeded) {
-      const actionArg = this.getActionsArg(normalized, validAction, this.argsFlags[0]);
+      const actionArg = this.getActionsArg(normalized, validActionName, validAction.flag, validAction.shortcut);
   
       if (!actionArg) {
         this.showHelp(true, 'Incorrect flag for actions argument was used!');
