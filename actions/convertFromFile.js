@@ -1,25 +1,21 @@
 const fs = require('fs');
 const csv = require('csvtojson');
+const path = require('path');
 
 function csvConverter(file) {
   csv()
     .fromFile(file)
-/*    .on('end_parsed', jsonArrObj => {
-      console.log(jsonArrObj);
-      this.push(jsonArrObj);
-    })
-    .on('done', error => {
-      console.log('end');
-    })*/
-    .then((jsonObj) => {
-      console.log(jsonObj);
-      return jsonObj;
-    })
-    /*.pipe(process.stdout)*/
+    .pipe(process.stdout);
 }
 
 function convertFromFile(filePath) {
-  console.log('converting from file...' + filePath);
+  const fileExt = path.extname(filePath);
+
+  if (fileExt !== '.csv') {
+    throw new Error('Incorrect file extension was passed!');
+  }
+
+  console.log(`converting data csv from file ${filePath} to stdout...`);
   csvConverter(filePath);
 }
 
