@@ -116,7 +116,7 @@ class Commander extends EventEmmiter {
       const actionArg = this.getActionsArg(normalized, validActionName, validAction.flag, validAction.shortcut);
   
       if (!actionArg) {
-        this.showHelp(true, 'Incorrect flag for actions argument was used!');
+        this.showHelp(true, 'Incorrect flag for action argument was used!');
         return
       }
       this.command(action, actionArg);

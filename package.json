@@ -19,6 +19,7 @@
   "dependencies": {
     "array-flatten": "^2.1.1",
     "colors": "^1.2.5",
+    "csvtojson": "^2.0.0",
     "through2": "^2.0.3"
   }
 }
