@@ -1,7 +1,6 @@
 var promisify = require("promisify-node");
 const path = require('path');
 const fs = promisify('fs');
-const fetch = require('node-fetch');
 
 function cssBundler(dirPath) {
   console.log(`bundling files from the ${dirPath} to the bundle.css...`);
@@ -17,7 +16,7 @@ function cssBundler(dirPath) {
       return fs.readFile(pathToFile).then(data => data.toString());
     }).filter(item => item))
     .then(files => {
-      const tail = fetch('https://epa.ms/nodejs18-hw3-css').then(data => data.toString());
+      const tail = fs.readFile(path.resolve('files/fileFromDisk.css')).then(data => data.toString());
       files.push(tail);
       return Promise.all(files);
     })
