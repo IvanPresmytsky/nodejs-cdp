@@ -8,7 +8,7 @@ function write (buffer, encoding, next) {
 }
 
 function end (done) {
-  console.log('Finis transforming...');
+  console.log('Finish transforming...');
   done();
 }
 
