@@ -1,0 +1,33 @@
+{
+  "name": "nodejs-cdp",
+  "version": "1.0.0",
+  "description": "homework app for node cdp",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:IvanPresmytsky/nodejs-cdp.git"
+  },
+  "author": "Ivan Prasmytski",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.17.3"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "csvtojson": "^1.1.9",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "lodash": "^4.17.10",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "passport-google-oauth": "^1.0.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "passport-twitter": "^1.0.4",
+    "qs-middleware": "^1.0.3",
+    "through2": "^2.0.3"
+  }
+}
