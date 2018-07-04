@@ -1,4 +1,4 @@
-const data = require('../fakeDB/db.js');
+const data = require('../../fakeDB/db.js');
 
 const checkUsers = (req, res, next) => {
   const users = data.users;

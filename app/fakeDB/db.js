@@ -25,11 +25,13 @@ const data = {
   users: [
     {
       id: 'user1',
-      name: 'First User'
+      name: 'First User',
+      password: '1111',
     },
     {
       id: 'user2',
-      name: 'Second User'
+      name: 'Second User',
+      password: '2222'
     }
   ]
 };

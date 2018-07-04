@@ -1,5 +1,5 @@
-const data = require('../fakeDB/db.js');
-const getById = require('../helpers');
+const data = require('../../fakeDB/db.js');
+const getById = require('../../helpers');
 
 const checkUser = (req, res, next) => {
   const user = data.users && getById(data.users, req.params.id);

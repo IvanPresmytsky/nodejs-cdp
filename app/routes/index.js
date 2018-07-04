@@ -1,2 +1,2 @@
-exports.routes = require('./app');
-exports.routes = require('./auth');
+exports.appRoutes = require('./appRoutes');
+exports.authRoutes = require('./authRoutes');

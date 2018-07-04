@@ -1,5 +1,5 @@
-const data = require('../fakeDB/db.js');
-const getById = require('../helpers');
+const data = require('../../fakeDB/db.js');
+const getById = require('../../helpers');
 
 const getProductReviews = (req, res) => {
   const product = data.products && getById(data.products, req.params.id);

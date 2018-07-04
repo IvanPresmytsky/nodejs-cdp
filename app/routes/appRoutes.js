@@ -1,3 +1,5 @@
+const passport = require('passport');
+
 const {
   checkUser,
   checkUsers,
@@ -10,29 +12,33 @@ const {
   getUser,
   getUsers,
   postProducts
-} = require('../controllers');
+} = require('../controllers/app');
 
+require('../config/passwordJWTStrategy');
+
+const verify = passport.authenticate('jwt', { session: false });
+  
 const routes = app => {
   app.route('/api/products')
     all(checkProducts)
-    post(postProducts)
-    get(getProducts);
-
+    post(verify, postProducts)
+    get(verify, getProducts);
+  
   app.route('/api/products/:id')
     all(checkProduct)
-    get(getProduct);
-
+    get(verify, getProduct);
+  
   app.route('/api/products/:id/reviews')
     all(checkProductReview)
-    get(getProductReview);
-
+    get(verify, getProductReview);
+  
   app.route('/api/users')
     all(checkUsers)
-    get(getUsers);
-
+    get(verify, getUsers);
+  
   app.route('/api/users/:id')
     all(checkUser)
-    get(getUser);
+    get(verify, getUser);
 };
-
+  
 module.exports = routes;
