@@ -14,6 +14,8 @@ const {
   postProducts
 } = require('../controllers/app');
 
+const authenticate = require('./authRoutes');
+
 require('../config/passwordJWTStrategy');
 
 const verify = passport.authenticate('jwt', { session: false });
@@ -39,6 +41,8 @@ const routes = app => {
   app.route('/api/users/:id')
     all(checkUser)
     get(verify, getUser);
+
+  app.use('/auth', authenticate);
 };
   
 module.exports = routes;
