@@ -1,5 +1,5 @@
 const passport = require('passport');
-require('../../config/passportGoogleAuthStrategy');
+require('../../config/passportGoogleStrategy');
 
 const googleAuth = (req, res, next) => {
   passport.authenticate('google',

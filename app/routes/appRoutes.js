@@ -5,10 +5,10 @@ const {
   checkUsers,
   checkProduct,
   checkProducts,
-  checkProductReview,
+  checkProductReviews,
   getProduct,
   getProducts,
-  getProductReview,
+  getProductReviews,
   getUser,
   getUsers,
   postProducts
@@ -16,31 +16,31 @@ const {
 
 const authenticate = require('./authRoutes');
 
-require('../config/passwordJWTStrategy');
+require('../config/passportJWTStrategy');
 
 const verify = passport.authenticate('jwt', { session: false });
   
 const routes = app => {
   app.route('/api/products')
-    all(checkProducts)
-    post(verify, postProducts)
-    get(verify, getProducts);
+    .all(checkProducts)
+    .post(verify, postProducts)
+    .get(verify, getProducts);
   
   app.route('/api/products/:id')
-    all(checkProduct)
-    get(verify, getProduct);
+    .all(checkProduct)
+    .get(verify, getProduct);
   
   app.route('/api/products/:id/reviews')
-    all(checkProductReview)
-    get(verify, getProductReview);
+    .all(checkProductReviews)
+    .get(verify, getProductReviews);
   
   app.route('/api/users')
-    all(checkUsers)
-    get(verify, getUsers);
+    .all(checkUsers)
+    .get(verify, getUsers);
   
   app.route('/api/users/:id')
-    all(checkUser)
-    get(verify, getUser);
+    .all(checkUser)
+    .get(verify, getUser);
 
   app.use('/auth', authenticate);
 };
