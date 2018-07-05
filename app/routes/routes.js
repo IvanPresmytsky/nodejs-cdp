@@ -3,10 +3,10 @@ const {
   checkUsers,
   checkProduct,
   checkProducts,
-  checkProductReview,
+  checkProductReviews,
   getProduct,
   getProducts,
-  getProductReview,
+  getProductReviews,
   getUser,
   getUsers,
   postProducts
@@ -14,25 +14,25 @@ const {
 
 const routes = app => {
   app.route('/api/products')
-    all(checkProducts)
-    post(postProducts)
-    get(getProducts);
+    .all(checkProducts)
+    .post(postProducts)
+    .get(getProducts);
 
   app.route('/api/products/:id')
-    all(checkProduct)
-    get(getProduct);
+    .all(checkProduct)
+    .get(getProduct);
 
   app.route('/api/products/:id/reviews')
-    all(checkProductReview)
-    get(getProductReview);
+    .all(checkProductReviews)
+    .get(getProductReviews);
 
   app.route('/api/users')
-    all(checkUsers)
-    get(getUsers);
+    .all(checkUsers)
+    .get(getUsers);
 
   app.route('/api/users/:id')
-    all(checkUser)
-    get(getUser);
+    .all(checkUser)
+    .get(getUser);
 };
 
 module.exports = routes;
