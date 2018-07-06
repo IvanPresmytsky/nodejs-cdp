@@ -1,6 +1,6 @@
 const passport = require('passport');
 const { OAuth2Strategy } = require('passport-google-oauth');
-const { installed } =require('../secret/google_client_secret.json');
+const { installed } = require('../secret/google_client_secret.js');
 
 const { client_id, client_secret, redirect_uris } = installed;
 

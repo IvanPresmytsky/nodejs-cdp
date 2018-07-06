@@ -4,7 +4,7 @@ const {
   facebookClientId,
   facebookClientSecret,
   facebookCallbackUri,
-} = require('../secret/facebook.json');
+} = require('../secret/facebook.js');
 
 passport.use(
   new Strategy({

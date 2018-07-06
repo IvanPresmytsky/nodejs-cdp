@@ -16,7 +16,7 @@ const {
 
 const authenticate = require('./authRoutes');
 
-require('../config/passwordJWTStrategy');
+require('../config/passportJWTStrategy');
 
 const verify = passport.authenticate('jwt', { session: false });
   
@@ -31,8 +31,8 @@ const routes = app => {
     .get(verify, getProduct);
   
   app.route('/api/products/:id/reviews')
-    .all(checkProductReview)
-    .get(verify, getProductReview);
+    .all(checkProductReviews)
+    .get(verify, getProductReviews);
   
   app.route('/api/users')
     .all(checkUsers)

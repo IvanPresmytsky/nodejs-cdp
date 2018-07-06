@@ -4,7 +4,7 @@ const {
   twitterConsumerKey,
   twitterConsumerSecret,
   twitterCallbackUri,
-} = require('../secret/twitter.json');
+} = require('../secret/twitter.js');
 
 passport.use(
   new Strategy({
