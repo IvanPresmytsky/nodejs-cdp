@@ -1,5 +1,5 @@
 const express = require('express');
-const routes = require('./routes');
+const routes = require('./routes/routes');
 const { cookieParser, qsParser } = require('./middlewares');
 
 const app = express();
@@ -12,7 +12,5 @@ app.use(cookieParser());
 app.use(qsParser());
 
 routes(app);
-
-app.use('/', router);
 
 module.exports = app;
