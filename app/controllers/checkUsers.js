@@ -4,7 +4,7 @@ const checkUsers = (req, res, next) => {
   const users = data.users;
   if (!users) {
     res.status(404)
-      json({message: `users not found`});
+      .json({message: `users not found`});
   }
   next();
 };
