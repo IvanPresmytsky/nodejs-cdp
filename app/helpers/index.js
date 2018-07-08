@@ -1,0 +1,1 @@
+exports.getById = require('./getById');
