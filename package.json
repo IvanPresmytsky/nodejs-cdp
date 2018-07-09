@@ -29,7 +29,10 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
+    "pg": "^7.4.3",
     "qs-middleware": "^1.0.3",
+    "sequelize": "^4.38.0",
+    "sequelize-cli": "^4.0.0",
     "through2": "^2.0.3"
   }
 }
