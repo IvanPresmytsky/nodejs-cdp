@@ -1,9 +1,10 @@
-const data = require('../../fakeDB/db.js');
+const { Product } = require('../../models');
 
 const getProducts = (req, res) => {
-  const products = data.products;
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end(JSON.stringify(products));
+  return Product
+    .findAll()
+    .then(products => res.status(200).send(products))
+    .catch(error => res.status(400).send(error));
 };
 
 module.exports = getProducts;

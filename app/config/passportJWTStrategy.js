@@ -10,7 +10,11 @@ passport.use(
   },
   (jwt_payload, done) => {
 
-    const user = db.users && db.users[0];
+    const user = {
+      id: 'user1',
+      name: 'First User',
+      password: '1111'
+    };
 
     return (
       jwt_payload.name === user.name

@@ -1,10 +1,17 @@
-const data = require('../../fakeDB/db.js');
-const { getById } = require('../../helpers');
+const { User } = require('../../models');
 
 const getUser = (req, res) => {
-  const user = data.users && getById(data.users, req.params.id);
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end(JSON.stringify(user));
+  return User
+    .findById(req.params.id)
+    .then(user => {
+      if (!user) {
+        return res.status(404).send({
+          message: `user with id ${req.params.id} not found`,
+        });
+      }
+      return res.status(200).send(user);
+    })
+    .catch(err => res.status(400).send(err));
 };
 
 module.exports = getUser;

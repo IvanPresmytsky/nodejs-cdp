@@ -1,11 +1,6 @@
 const passport = require('passport');
 
 const {
-  checkUser,
-  checkUsers,
-  checkProduct,
-  checkProducts,
-  checkProductReviews,
   getProduct,
   getProducts,
   getProductReviews,
@@ -22,25 +17,20 @@ const verify = passport.authenticate('jwt', { session: false });
   
 const routes = app => {
   app.route('/api/products')
-    .all(checkProducts)
-    .post(verify, postProducts)
-    .get(verify, getProducts);
+    .post(postProducts)
+    .get(getProducts);
   
   app.route('/api/products/:id')
-    .all(checkProduct)
-    .get(verify, getProduct);
+    .get(getProduct);
   
   app.route('/api/products/:id/reviews')
-    .all(checkProductReviews)
-    .get(verify, getProductReviews);
+    .get(getProductReviews);
   
   app.route('/api/users')
-    .all(checkUsers)
-    .get(verify, getUsers);
+    .get(getUsers);
   
   app.route('/api/users/:id')
-    .all(checkUser)
-    .get(verify, getUser);
+    .get(getUser);
 
   app.use('/auth', authenticate);
 };

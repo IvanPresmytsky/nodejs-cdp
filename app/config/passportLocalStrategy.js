@@ -10,7 +10,11 @@ passport.use(
   },
   (login, password, cb) => {
 
-    const user = db.users && db.users[0];
+    const user = {
+      id: 'user1',
+      name: 'First User',
+      password: '1111'
+    };
 
     return (login === user.name && password === user.password)
       ? cb(null, user, {message: `User ${user.name} logged in successfully`})

@@ -1,9 +1,10 @@
-const data = require('../../fakeDB/db.js');
+const { User } = require('../../models');
 
 const getUsers = (req, res) => {
-  const users = data.users;
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end(JSON.stringify(users));
+  return User
+    .findAll()
+    .then(users => res.status(200).send(users))
+    .catch(err => res.status(404).send(err));
 };
 
 module.exports = getUsers;
