@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "ivan",
-    "password": null,
-    "database": "nodecdp",
+    "password": "111",
+    "database": "nodejs",
     "host": "127.0.0.1",
     "dialect": "postgres"
   }

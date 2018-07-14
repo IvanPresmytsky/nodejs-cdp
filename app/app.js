@@ -2,7 +2,6 @@ const express = require('express');
 const passport = require('passport');
 const routes = require('./routes/appRoutes');
 const session = require('express-session');
-const db = require('./db');
 const { cookieParser, qsParser } = require('./middlewares');
 
 const app = express();

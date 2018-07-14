@@ -1,10 +1,11 @@
-const db = require('..db/');
-const { sequelize, Sequelize } = db;
-
-const Product = sequelize.define('Product', {
-  id: Sequelize.STRING,
-  name: Sequelize.STRING,
-  reviews: Sequelize.ARRAY(Sequelize.TEXT)
-});
-
-module.exports = Product;
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+  var Product = sequelize.define('Product', {
+    id: DataTypes.STRING,
+    reviews: DataTypes.ARRAY
+  }, {});
+  Product.associate = function(models) {
+    // associations can be defined here
+  };
+  return Product;
+};
