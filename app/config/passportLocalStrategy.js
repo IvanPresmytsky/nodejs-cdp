@@ -1,8 +1,6 @@
 const { Strategy } = require('passport-local');
 const passport = require('passport');
 
-const db = require('../fakeDB/db');
-
 passport.use(
   new Strategy({
     usernameField: 'name',
