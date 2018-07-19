@@ -1,16 +1,28 @@
-'use strict';
-module.exports = (sequelize, DataTypes) => {
-  var Product = sequelize.define('Product', {
-    id: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
-      primaryKey: true,
+const mongoose = require('mongoose');
+
+const reviewSchema = mongoose.Schema({
+  title: {
+    type: String,
+  },
+});
+
+const productSchema = mongoose.Schema({
+  id: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true,
+    validate: {
+      validator(name) {
+        return name.length > 3;
+      },
+      message: 'Name should contain atleast 3 characters',
     },
-    reviews: DataTypes.ARRAY(DataTypes.TEXT),
-  }, {});
-  Product.associate = function(models) {
-    // associations can be defined here
-  };
-  return Product;
-};
+  },
+  lastModifiedDate: {
+    type: Date,
+  },
+  reviews: [reviewSchema],
+});
+
+module.exports = mongoose.model('Product', productSchema);
