@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const citySchema = mongoose.Schema({
-  _id: {
+  id: {
     type: String,
     required: true,
     default: () => new Schema.Types.ObjectId(),
@@ -41,6 +41,6 @@ const citySchema = mongoose.Schema({
   lastModifiedDate: {
     type: Date,
   },
-}, { collection: 'cities' });
+});
 
-module.exports = mongoose.model('City', citySchema);
+module.exports = mongoose.model('cities', citySchema);
