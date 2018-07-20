@@ -1,5 +1,6 @@
 [
-  {
+  { 
+    "id": "Brest",
     "name": "Brest",
     "country": "Belarus",
     "capital": false,
@@ -9,6 +10,7 @@
     }
   },
   {
+    "id": "Gomel",
     "name": "Gomel",
     "country": "Belarus",
     "capital": false,
@@ -18,6 +20,7 @@
     }
   },
   {
+    "id": "Grodno",
     "name": "Grodno",
     "country": "Belarus",
     "capital": false,
@@ -27,6 +30,7 @@
     }
   },
   {
+    "id": "Minsk",
     "name": "Minsk",
     "country": "Belarus",
     "capital": true,
@@ -36,6 +40,7 @@
     }
   },
   {
+    "id": "Mogilev",
     "name": "Mogilev",
     "country": "Belarus",
     "capital": false,
@@ -45,6 +50,7 @@
     }
   },
   {
+    "id": "Vitebsk",
     "name": "Vitebsk",
     "country": "Belarus",
     "capital": false,
