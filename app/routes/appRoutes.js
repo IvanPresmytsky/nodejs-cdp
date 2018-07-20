@@ -1,38 +1,50 @@
-const passport = require('passport');
+const {
+  deleteProduct,
+  getAllProducts,
+  getProduct,
+  getProductReviews,
+  postProducts,
+} = require('../controllers/products');
 
 const {
-  getProduct,
-  getProducts,
-  getProductReviews,
+  deleteUser,
+  getAllUsers,
   getUser,
-  getUsers,
-  postProducts
-} = require('../controllers/app');
+} = require('../controllers/users');
 
-const authenticate = require('./authRoutes');
-
-require('../config/passportJWTStrategy');
-
-const verify = passport.authenticate('jwt', { session: false });
+const {
+  deleteCity,
+  getAllCities,
+  postCities,
+  updateCity,
+} = require('../controllers/cities');
   
 const routes = app => {
   app.route('/api/products')
     .post(postProducts)
-    .get(getProducts);
+    .get(getAllProducts);
+
+  app.route('/api/cities')
+    .post(postCities)
+    .get(getAllCities);
+  
+  app.route('/api/cities/:id')
+    .put(updateCity)
+    .delete(deleteCity);
   
   app.route('/api/products/:id')
-    .get(getProduct);
+    .get(getProduct)
+    .delete(deleteProduct);
   
   app.route('/api/products/:id/reviews')
     .get(getProductReviews);
   
   app.route('/api/users')
-    .get(getUsers);
+    .get(getAllUsers)
   
   app.route('/api/users/:id')
-    .get(getUser);
-
-  app.use('/auth', authenticate);
+    .get(getUser)
+    .delete(deleteUser);
 };
   
 module.exports = routes;

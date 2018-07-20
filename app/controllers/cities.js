@@ -15,7 +15,7 @@ exports.postCities = (req, res) => {
     .catch(err => res.send({ status: 500, error: err }));
 };
   
-exports.updateCityById = (req, res) => {
+exports.updateCity = (req, res) => {
   const cityId = req.params.id;
   
   Cities.find({ id: cityId })
@@ -39,7 +39,7 @@ exports.updateCityById = (req, res) => {
     .catch(err => res.send({ status: 500, error: err }));
 };
   
-exports.deleteCityById = (req, res) => {
+exports.deleteCity = (req, res) => {
   const cityId = req.params.id;
   
   Cities.deleteOne({ id: cityId })

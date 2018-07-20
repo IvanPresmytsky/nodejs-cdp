@@ -14,6 +14,20 @@ exports.getProduct = (req, res) => {
       .catch(err => res.send({ status: 500, error: err }));
 };
 
+exports.getProductReviews = (req, res) => {
+  const productId = req.params.id;
+  Products.findOne({ id: productId })
+    .then(product => {
+      if (!product.reviews) {
+        return res.status(404).send({
+          message: `reviews for product with id ${req.params.id} not found`,
+        });
+      }
+      res.json(product.reviews);
+    })
+    .catch(err => res.send({ status: 500, error: err }));
+};
+
 exports.postProducts = (req, res) => {
   const newProduct = new Products({ ...req.body });
     checkItem(Products, newProduct)
@@ -22,31 +36,7 @@ exports.postProducts = (req, res) => {
       .catch(err => res.send({ status: 500, error: err }));
 };
 
-exports.updateProductById = (req, res) => {
-  const productId = req.params.id;
-
-  Products.find({ id: productId })
-    .then(product => {
-      if (product.length === 0) {
-        const newProduct = new Products({ ...req.body });
-        return checkItem(Products, newProduct)
-          .then(product => res.json(product))
-          .catch(err => res.send({ status: 500, error: err }));
-        }
-      Products.updateOne({ id: productId }, req.body)
-        .then((result) => {
-          console.log(`modified ${result.nModified} document(s)`);
-          return Products.findOne({ id: productId })
-            .then(product => addLastModified(Products, product.id))
-            .then(product => res.json(product))
-            .catch(err => res.send({ status: 500, error: err }));
-        })
-        .catch(err => console.log(err));
-      })
-    .catch(err => res.send({ status: 500, error: err }));
-};
-
-exports.deleteProductById = (req, res) => {
+exports.deleteProduct = (req, res) => {
   const productId = req.params.id;
 
   Products.deleteOne({ id: productId })
