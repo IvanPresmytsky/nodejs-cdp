@@ -4,7 +4,6 @@ const citySchema = mongoose.Schema({
   id: {
     type: String,
     required: true,
-    default: () => new Schema.Types.ObjectId(),
   },
   name: {
     type: String,

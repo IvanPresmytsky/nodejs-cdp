@@ -1,4 +1,4 @@
-const Cities = require('../models/city');
+const { Cities } = require('../models');
 const { addLastModified, checkItem } = require('../helpers');
 
 exports.getAllCities = (req, res) => {
