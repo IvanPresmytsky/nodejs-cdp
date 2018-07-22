@@ -1,25 +1,12 @@
-const Users = require('../models/user');
+const { Users } = require('../models');
+const {
+  deleteById,
+  getAll,
+  getById
+} = require('../helpers');
 
-exports.getAllUsers = (req, res) => {
-  Users.find({})
-    .then(data => res.json(data))
-    .catch(err => res.send({ status: 500, error: err }));
-};
+exports.getAllUsers = getAll(Users);
 
-exports.getUser = (req, res) => {
-    const userId = req.params.id;
-    Users.findOne({ id: userId })
-      .then(user => res.json(user))
-      .catch(err => res.send({ status: 500, error: err }));
-};
+exports.getUser = getById(Users);
 
-exports.deleteUser = (req, res) => {
-  const userId = req.params.id;
-
-  Users.deleteOne({ id: userId })
-    .then((result) => {
-      console.log(`deleted ${result.n} documents`);
-      res.end();
-    })
-    .catch(err => res.send({ status: 500, error: err }));
-}
+exports.deleteUser = deleteById(Users);
