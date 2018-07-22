@@ -18,24 +18,9 @@
   },
   "dependencies": {
     "cookie-parser": "^1.4.3",
-    "csvtojson": "^1.1.9",
     "express": "^4.16.3",
-    "express-session": "^1.15.6",
-    "jsonwebtoken": "^8.3.0",
-    "lodash": "^4.17.10",
     "mongodb": "^3.1.1",
     "mongoose": "^5.2.4",
-    "passport": "^0.4.0",
-    "passport-facebook": "^2.1.1",
-    "passport-google-oauth": "^1.0.0",
-    "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0",
-    "passport-twitter": "^1.0.4",
-    "pg": "^7.4.3",
-    "pg-hstore": "^2.3.2",
-    "qs-middleware": "^1.0.3",
-    "sequelize": "^4.38.0",
-    "sequelize-cli": "^4.0.0",
-    "through2": "^2.0.3"
+    "qs-middleware": "^1.0.3"
   }
 }
