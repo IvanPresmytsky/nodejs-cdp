@@ -1,9 +1,9 @@
 const {
+  addProduct,
   deleteProduct,
   getAllProducts,
-  getProduct,
+  getProductById,
   getProductReviews,
-  postProducts,
 } = require('../controllers/products');
 
 const {
@@ -13,19 +13,19 @@ const {
 } = require('../controllers/users');
 
 const {
+  addCity,
   deleteCity,
   getAllCities,
-  postCities,
   updateCity,
 } = require('../controllers/cities');
   
 const routes = app => {
   app.route('/api/products')
-    .post(postProducts)
+    .post(addProduct)
     .get(getAllProducts);
 
   app.route('/api/cities')
-    .post(postCities)
+    .post(addCity)
     .get(getAllCities);
   
   app.route('/api/cities/:id')
@@ -33,7 +33,7 @@ const routes = app => {
     .delete(deleteCity);
   
   app.route('/api/products/:id')
-    .get(getProduct)
+    .get(getProductById)
     .delete(deleteProduct);
   
   app.route('/api/products/:id/reviews')

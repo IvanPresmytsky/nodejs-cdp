@@ -8,7 +8,7 @@ const {
 
 exports.getAllCities = getAll(Cities);
 
-exports.postCities = postItem(Cities);
+exports.addCity = postItem(Cities);
 
 exports.updateCity = updateItem(Cities);
 

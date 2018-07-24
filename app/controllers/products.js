@@ -9,10 +9,10 @@ const {
 
 exports.getAllProducts = getAll(Products);
 
-exports.getProduct = getById(Products);
+exports.getProductById = getById(Products);
 
 exports.getProductReviews = getItemProps(Products, 'reviews');
 
-exports.postProducts = postItem(Products);
+exports.addProduct = postItem(Products);
 
 exports.deleteProduct = deleteById(Products);

@@ -1,6 +1,6 @@
 const { addLastModified, checkItem } = require('./');
 
-const postItem = (model) =>(req, res) => {
+const addItem = (model) =>(req, res) => {
   const newItem = new model({ ...req.body });
   checkItem(model, newItem)
     .then(item => addLastModified(model, item.id))
@@ -8,4 +8,4 @@ const postItem = (model) =>(req, res) => {
     .catch(err => res.send({ status: 500, error: err }));
 };
 
-module.exports = postItem;
+module.exports = addItem;
