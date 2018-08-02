@@ -7,6 +7,6 @@ const {
 
 exports.getAllUsers = getAll(Users);
 
-exports.getUser = getById(Users);
+exports.getUserById = getById(Users);
 
 exports.deleteUser = deleteById(Users);

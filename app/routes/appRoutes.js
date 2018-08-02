@@ -9,7 +9,7 @@ const {
 const {
   deleteUser,
   getAllUsers,
-  getUser,
+  getUserById,
 } = require('../controllers/users');
 
 const {
@@ -43,7 +43,7 @@ const routes = app => {
     .get(getAllUsers)
   
   app.route('/api/users/:id')
-    .get(getUser)
+    .get(getUserById)
     .delete(deleteUser);
 };
   
