@@ -1,0 +1,1 @@
+exports.appRoutes = require('./appRoutes');

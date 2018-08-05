@@ -1,0 +1,324 @@
+---
+swagger: "2.0"
+info:
+  version: "2.0"
+  title: "Swagger Homework8"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8080"
+basePath: "/api"
+tags:
+- name: "product"
+  description: "Information about products"
+- name: "city"
+  description: "Information about cities"
+- name: "user"
+  description: "Operations about users"
+schemes:
+- "http"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /products:
+    get:
+      tags:
+      - "product"
+      summary: "Find all products"
+      description: "Returns a single product"
+      operationId: "getAllProducts"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Product"
+        404:
+          description: "Product not found"
+      x-swagger-router-controller: "Product"
+    post:
+      tags:
+      - "product"
+      summary: "Add a new product"
+      operationId: "addProduct"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Product object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/Product"
+      responses:
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "Product"
+  /products/{productId}:
+    get:
+      tags:
+      - "product"
+      summary: "Find product by ID"
+      description: "Returns a single product"
+      operationId: "getProductById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "productId"
+        in: "path"
+        description: "ID of product to return"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Product"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Product not found"
+      x-swagger-router-controller: "Product"
+    delete:
+      tags:
+      - "product"
+      summary: "Deletes a product"
+      operationId: "deleteProduct"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "productId"
+        in: "path"
+        description: "Product id to delete"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Product not found"
+      x-swagger-router-controller: "Product"
+  /cities:
+    get:
+      tags:
+      - "city"
+      summary: "Find all cities"
+      description: "Returns all cities"
+      operationId: "getAllCities"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/City"
+        404:
+          description: "City not found"
+      x-swagger-router-controller: "City"
+    post:
+      tags:
+      - "city"
+      summary: "Add a new city"
+      operationId: "addCity"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "City object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/City"
+      responses:
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "City"
+  /cities/{cityId}:
+    put:
+      tags:
+      - "city"
+      summary: "Updated city"
+      description: "Updates the city."
+      operationId: "updateCity"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cityId"
+        in: "path"
+        description: "id that need to be updated"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Updated city object"
+        required: true
+        schema:
+          $ref: "#/definitions/City"
+      responses:
+        400:
+          description: "Invalid city supplied"
+        404:
+          description: "City not found"
+      x-swagger-router-controller: "City"
+    delete:
+      tags:
+      - "city"
+      summary: "Deletes a city"
+      operationId: "deleteCity"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cityId"
+        in: "path"
+        description: "City id to delete"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "City not found"
+      x-swagger-router-controller: "City"
+  /users:
+    post:
+      tags:
+      - "user"
+      summary: "Get all users"
+      description: "Get the list of the users"
+      operationId: "getAllUsers"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created user object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "User"
+  /users/{userId}:
+    get:
+      tags:
+      - "userId"
+      summary: "Get user by user id"
+      operationId: "getUserById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "The id that needs to be fetched. Use user1 for testing."
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+      x-swagger-router-controller: "UserId"
+    delete:
+      tags:
+      - "user"
+      summary: "Delete user by id"
+      description: "This can only be done by the logged in user."
+      operationId: "deleteUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "The id that needs to be deleted"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+      x-swagger-router-controller: "User"
+definitions:
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+      password:
+        type: "string"
+      lastModifiedDate:
+        type: "string"
+    example:
+      password: "password"
+      lastModifiedDate: "lastModifiedDate"
+      name: "name"
+      id: "id"
+  Product:
+    type: "object"
+    required:
+    - "id"
+    properties:
+      id:
+        type: "string"
+      reviews:
+        $ref: "#/definitions/Product_review"
+      lastModifiedDate:
+        type: "string"
+    example:
+      reviews:
+        title: "title"
+      lastModifiedDate: "lastModifiedDate"
+      id: "id"
+  Product_review:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+    example:
+      title: "title"
+  City:
+    type: "object"
+    required:
+    - "country"
+    - "name"
+    properties:
+      name:
+        type: "string"
+      country:
+        type: "string"
+      location:
+        $ref: "#/definitions/City_location"
+      capital:
+        type: "boolean"
+      lastModifiedDate:
+        type: "string"
+    example:
+      country: "country"
+      capital: true
+      lastModifiedDate: "lastModifiedDate"
+      name: "name"
+      location:
+        lat: "lat"
+        long: "long"
+  City_location:
+    properties:
+      lat:
+        type: "string"
+        default: ""
+      long:
+        type: "string"
+        default: ""
+    example:
+      lat: "lat"
+      long: "long"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
