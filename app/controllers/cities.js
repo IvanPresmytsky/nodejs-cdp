@@ -2,13 +2,13 @@ const { Cities } = require('../models');
 const {
   deleteById,
   getAll,
-  postItem,
+  addItem,
   updateItem
 } = require('../helpers');
 
 exports.getAllCities = getAll(Cities);
 
-exports.addCity = postItem(Cities);
+exports.addCity = addItem(Cities);
 
 exports.updateCity = updateItem(Cities);
 

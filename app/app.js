@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const SwaggerExpress = require('swagger-express-mw');
+const SwaggerExpress = require('swagger-express-middleware');
 
 const citiesData = require('./mock/cities.json');
 const productsData = require('./mock/products.json');
@@ -22,6 +22,22 @@ mongoose.connect(config.db)
 importData(Cities, citiesData);
 importData(Products, productsData);
 importData(Users, usersData);
+
+SwaggerExpress('./swagger.yaml', app, function(err, middleware) {
+  app.use(
+    middleware.metadata(),
+    middleware.CORS(),
+    middleware.files(),
+    middleware.parseRequest(),
+    middleware.validateRequest(),
+    middleware.mock()
+  );
+
+  app.listen(8000, function() {
+    console.log('The Sagger sample is now running at http://localhost:8000');
+  });
+
+});
 
 app.use(bodyParser);
 

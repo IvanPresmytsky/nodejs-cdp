@@ -4,7 +4,7 @@ const {
   getAll,
   getById,
   getItemProps,
-  postItem
+  addItem
 } = require('../helpers');
 
 exports.getAllProducts = getAll(Products);
@@ -13,6 +13,6 @@ exports.getProductById = getById(Products);
 
 exports.getProductReviews = getItemProps(Products, 'reviews');
 
-exports.addProduct = postItem(Products);
+exports.addProduct = addItem(Products);
 
 exports.deleteProduct = deleteById(Products);
