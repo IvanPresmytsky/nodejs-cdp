@@ -1,0 +1,35 @@
+[
+    {
+      "id": "product1",
+      "reviews": [
+        {
+          "title": "review1"
+        },
+        {
+          "title": "review2"
+        }
+      ]
+    },
+    {
+      "id": "product2",
+      "reviews": [
+        {
+          "title": "review1"
+        },
+        {
+          "title": "review2"
+        },
+        {
+          "title": "review3"
+        }
+      ]
+    },
+    {
+      "id": "product3",
+      "reviews": [
+        {
+          "title": "review1"
+        }
+      ]
+    }
+]
